@@ -17,14 +17,11 @@ public class UserRoute {
 	UserService us;
 	
 	@GetMapping
-	public String getUsers() {
-		
-		us.save(new User("bob", "wills"));
-		
-		return "0 users found";
+	public Iterable<User> getUsers() {
+		return us.getUsers();
 	}
 	
-	@GetMapping("/addUsers")
+	@PostMapping
 	public String addUsers() {
 		
 		us.save(new User("bob", "wills"));
