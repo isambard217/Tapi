@@ -21,8 +21,8 @@ public class UserService {
 		userRepository.save(u);
 	}
 	
-	public Iterable<User> getUsers(){
-		return userRepository.findAll();
+	public ArrayList<User> getUsers(){
+		return (ArrayList<User>) userRepository.findAll();
 	}
 
 }
