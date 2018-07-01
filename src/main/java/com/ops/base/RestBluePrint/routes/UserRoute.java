@@ -1,5 +1,7 @@
 package com.ops.base.RestBluePrint.routes;
 
+import java.util.ArrayList;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,7 +19,7 @@ public class UserRoute {
 	UserService us;
 	
 	@GetMapping
-	public Iterable<User> getUsers() {
+	public ArrayList<User> getUsers() {
 		return us.getUsers();
 	}
 	

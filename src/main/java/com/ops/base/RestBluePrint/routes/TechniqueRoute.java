@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RequestMapping("/api/Techniques")
 @RestController
-public class Techniques {
+public class TechniqueRoute {
 	@GetMapping
 	public String getTech() {
 		return "tech not availble";
