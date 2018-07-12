@@ -12,11 +12,12 @@ import com.ops.base.RestBluePrint.routes.*;
 @SpringBootTest
 public class RestBluePrintApplicationTests {
 	@Autowired
-	private UserRoute userRoute;
-	@Autowired TechniqueRoute techniquesRoute;
+	private Users users;
+	@Autowired
+    Techniques techniquesRoute;
 	@Test
 	public void contextLoads() throws  Exception{
-	    assertThat(userRoute).isNotNull();
+	    assertThat(users).isNotNull();
 	    assertThat(techniquesRoute).isNotNull();
     }
 

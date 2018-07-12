@@ -20,7 +20,7 @@ import com.ops.base.RestBluePrint.Domains.User;
 import com.ops.base.RestBluePrint.Service.UserService;
 
 @RunWith(SpringRunner.class)
-@WebMvcTest(UserRoute.class)
+@WebMvcTest(Users.class)
 public class UserRoutMockTest {
 	
 	@Autowired

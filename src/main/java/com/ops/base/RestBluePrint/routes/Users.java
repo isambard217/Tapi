@@ -3,17 +3,15 @@ package com.ops.base.RestBluePrint.routes;
 import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.ops.base.RestBluePrint.Domains.User;
 import com.ops.base.RestBluePrint.Service.UserService;
 
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("api/user")
-public class UserRoute {
+public class Users {
 	
 	@Autowired
 	UserService us;
