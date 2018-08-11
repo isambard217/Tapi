@@ -1,4 +1,4 @@
-package com.ops.base.RestBluePrint.Domains;
+package com.ops.base.EducationProject.Domains;
 
 import javax.persistence.*;
 

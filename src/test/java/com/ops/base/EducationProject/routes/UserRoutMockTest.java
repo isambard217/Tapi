@@ -1,4 +1,4 @@
-package com.ops.base.RestBluePrint.routes;
+package com.ops.base.EducationProject.routes;
 
 import static org.hamcrest.Matchers.containsString;
 import static org.mockito.Mockito.when;
@@ -16,8 +16,8 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
-import com.ops.base.RestBluePrint.Domains.User;
-import com.ops.base.RestBluePrint.Service.UserService;
+import com.ops.base.EducationProject.Domains.User;
+import com.ops.base.EducationProject.Service.UserService;
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(Users.class)

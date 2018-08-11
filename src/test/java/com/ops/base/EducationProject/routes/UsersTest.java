@@ -1,4 +1,4 @@
-package com.ops.base.RestBluePrint.routes;
+package com.ops.base.EducationProject.routes;
 
 
 import static org.assertj.core.api.Assertions.assertThat;
