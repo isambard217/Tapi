@@ -16,7 +16,7 @@ public class SwaggerConfig {
 	public Docket api() {                
 	    return new Docket(DocumentationType.SWAGGER_2)          
 	      .select()                                       
-	      .apis(RequestHandlerSelectors.basePackage("com.ops.base.RestBluePrint.routes"))
+	      .apis(RequestHandlerSelectors.basePackage("com.ops.base.EducationProject.routes"))
 	      .paths(PathSelectors.ant("/api/*"))                     
 	      .build();
 	}
