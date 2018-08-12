@@ -13,12 +13,12 @@ import com.ops.base.EducationProject.routes.*;
 @SpringBootTest
 public class EducationalApplicationTests {
 	@Autowired
-	private Users users;
+	private Students students;
 	@Autowired
 	Techniques techniques;
 	@Test
 	public void contextLoads() throws  Exception{
-	    assertThat(users).isNotNull();
+	    assertThat(students).isNotNull();
 	    assertThat(techniques).isNotNull();
     }
 

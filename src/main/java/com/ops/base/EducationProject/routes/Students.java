@@ -8,26 +8,26 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ops.base.EducationProject.Domains.User;
-import com.ops.base.EducationProject.Service.UserService;
+import com.ops.base.EducationProject.Domains.Student;
+import com.ops.base.EducationProject.Service.StudentsService;
 
 @RestController
-@RequestMapping("api/user")
-public class Users {
+@RequestMapping("api/students")
+public class Students {
 	
 	@Autowired
-	UserService us;
+	StudentsService us;
 	
 	@GetMapping
-	public ArrayList<User> getUsers() {
-		return us.getUsers();
+	public ArrayList<Student> getStudents() {
+		return us.getStudnets();
 	}
 	
 	@PostMapping
-	public String addUsers() {
+	public String addStudents() {
 		
-		us.save(new User("bob", "wills"));
+		us.save(new Student("bob", "wills"));
 		
-		return "users added";
+		return "Students added";
 	}
 }

@@ -16,31 +16,31 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
-import com.ops.base.EducationProject.Domains.User;
-import com.ops.base.EducationProject.Service.UserService;
+import com.ops.base.EducationProject.Domains.Student;
+import com.ops.base.EducationProject.Service.StudentsService;
 
 @RunWith(SpringRunner.class)
-@WebMvcTest(Users.class)
-public class UserRoutMockTest {
+@WebMvcTest(Students.class)
+public class StudentRoutMockTest {
 	
 	@Autowired
 	private MockMvc mockMvc;
 	
 	@MockBean
-	private UserService userService;
+	private StudentsService studentsService;
 	
 	@Test
 	public void getUsersShouldReturnAllUserRecordsStored() throws Exception {
 		// given
-		User alhaytham = new User("Alhaytham", "Elhassan");
-		User isambard = new User("Isambard", "Chey");
-		ArrayList<User> users = new ArrayList<>();
-		users.add(alhaytham);
-		users.add(isambard);
+		Student alhaytham = new Student("Alhaytham", "Elhassan");
+		Student isambard = new Student("Isambard", "Chey");
+		ArrayList<Student> students = new ArrayList<>();
+		students.add(alhaytham);
+		students.add(isambard);
 		// when 
-		when(userService.getUsers()).thenReturn(users);
+		when(studentsService.getStudnets()).thenReturn(students);
 		// then
-		this.mockMvc.perform(get("/api/user")).andDo(print()).andExpect(status().isOk())
+		this.mockMvc.perform(get("/api/students")).andDo(print()).andExpect(status().isOk())
 		.andExpect(content().string(containsString(alhaytham.getFirstname())))
 		.andExpect(content().string(containsString(isambard.getFirstname())));
 	}

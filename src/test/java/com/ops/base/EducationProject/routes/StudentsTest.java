@@ -14,7 +14,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
-public class UsersTest {
+public class StudentsTest {
 	
 	@LocalServerPort
 	private int port;
@@ -24,6 +24,6 @@ public class UsersTest {
 	
 	@Test
 	public void getUsersReturnIterableObject() throws Exception {
-		assertThat(this.restTemplate.getForObject("http://localhost:" + port + "/api/user",Iterable.class));
+		assertThat(this.restTemplate.getForObject("http://localhost:" + port + "/api/students",Iterable.class));
 	}
 }

@@ -29,8 +29,6 @@ repositories {
 
 
 dependencies {
-	
-	
 	compile('org.springframework.boot:spring-boot-starter-data-jpa')
 	//compile('org.springframework.boot:spring-boot-starter-security')
 	compile('org.springframework.boot:spring-boot-starter-web')
@@ -47,7 +45,8 @@ dependencies {
 	compile group: 'io.cucumber', name: 'cucumber-java', version: '3.0.2'
 // https://mvnrepository.com/artifact/io.cucumber/cucumber-junit
 	testCompile group: 'io.cucumber', name: 'cucumber-junit', version: '3.0.2'
-
+	// https://mvnrepository.com/artifact/org.projectlombok/lombok
+	compile group: 'org.projectlombok', name: 'lombok', version: '1.18.2'
 }
 
 task cucumber(dependsOn: testClasses) {
