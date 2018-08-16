@@ -1,10 +1,10 @@
-package com.ops.base.EducationProject.Domains;
+package com.ops.base.education.project.domain;
 
 import javax.persistence.*;
 
 @Entity
-@Table
-public class Student {
+@Table(name = "students")
+public class Student extends AuditEntity{
 	
 	@Id
 	@GeneratedValue
@@ -31,11 +31,11 @@ public class Student {
 		this.lastname = lastname;
 	}
 	private String lastname;
-	public Student() {
-		
-	}
+
+	public Student(){super();}
+
 	public Student(String firstname, String surname) {
-		
+		super();
 		this.firstname = firstname;
 		this.lastname = surname;
 		

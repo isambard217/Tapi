@@ -1,9 +1,9 @@
-package com.ops.base.EducationProject.Service;
+package com.ops.base.education.project.Service;
 
+import com.ops.base.education.project.domain.Student;
 import org.springframework.stereotype.Component;
 
-import com.ops.base.EducationProject.Domains.Student;
-import com.ops.base.EducationProject.Repository.StudentsRepository;
+import com.ops.base.education.project.Repository.StudentsRepository;
 
 import java.util.ArrayList;
 

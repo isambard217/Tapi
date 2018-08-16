@@ -1,4 +1,4 @@
-package com.ops.base.EducationProject.routes;
+package com.ops.base.education.project.routes;
 
 import java.util.ArrayList;
 
@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ops.base.EducationProject.Domains.Student;
-import com.ops.base.EducationProject.Service.StudentsService;
+import com.ops.base.education.project.domain.Student;
+import com.ops.base.education.project.Service.StudentsService;
 
 @RestController
 @RequestMapping("api/students")

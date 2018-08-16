@@ -1,7 +1,7 @@
-package com.ops.base.EducationProject.routes;
+package com.ops.base.education.project.routes;
 
-import com.ops.base.EducationProject.Domains.ProjectBase;
-import com.ops.base.EducationProject.Repository.ProjectBasesRepository;
+import com.ops.base.education.project.domain.ProjectBase;
+import com.ops.base.education.project.Repository.ProjectBasesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,7 +34,7 @@ public class ProjectBases {
   }
 
   @DeleteMapping
-  String deleteProjectBase(@PathVariable Long id) {
+  String deleteProjectBase(@RequestParam Long id) {
     this.projectBasesRepository.deleteById(id);
     return "ProjectBase deleted successfully";
   }

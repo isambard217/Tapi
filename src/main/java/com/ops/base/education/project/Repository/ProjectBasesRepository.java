@@ -1,8 +1,8 @@
-package com.ops.base.EducationProject.Repository;
+package com.ops.base.education.project.Repository;
 
+import com.ops.base.education.project.domain.ProjectBase;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
-import com.ops.base.EducationProject.Domains.ProjectBase;
 
 @Repository
 public interface ProjectBasesRepository extends CrudRepository<ProjectBase, Long> {

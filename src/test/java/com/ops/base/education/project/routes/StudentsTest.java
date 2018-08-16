@@ -1,4 +1,4 @@
-package com.ops.base.EducationProject.routes;
+package com.ops.base.education.project.routes;
 
 
 import static org.assertj.core.api.Assertions.assertThat;

@@ -1,6 +1,6 @@
-package com.ops.base.EducationProject.routes;
+package com.ops.base.education.project.routes;
 
-import com.ops.base.EducationProject.Domains.ProjectBase;
+import com.ops.base.education.project.domain.ProjectBase;
 import org.hamcrest.CoreMatchers;
 import org.junit.Test;
 import org.junit.runner.RunWith;
