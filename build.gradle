@@ -45,6 +45,7 @@ dependencies {
 	compile group: 'io.cucumber', name: 'cucumber-java', version: '3.0.2'
 // https://mvnrepository.com/artifact/io.cucumber/cucumber-junit
 	testCompile group: 'io.cucumber', name: 'cucumber-junit', version: '3.0.2'
+	compile group: 'com.opencsv', name: 'opencsv', version: '4.1'
 }
 
 task cucumber(dependsOn: testClasses) {

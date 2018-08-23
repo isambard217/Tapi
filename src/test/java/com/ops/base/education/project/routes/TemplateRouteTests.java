@@ -1,6 +1,6 @@
 package com.ops.base.education.project.routes;
 
-import com.ops.base.education.project.domain.ProjectBase;
+import com.ops.base.education.project.domain.Template;
 import org.hamcrest.CoreMatchers;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -21,7 +21,7 @@ import static org.junit.Assert.assertThat;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
-public class ProjectBaseRouteTests {
+public class TemplateRouteTests {
 
   @LocalServerPort
   private int port;
@@ -31,15 +31,15 @@ public class ProjectBaseRouteTests {
 
   @Test
   public void addProjectBasesShouldReturnAListOfTheAddedProjects() {
-    List<ProjectBase> projectBasesToAdd = new ArrayList<>();
-    ProjectBase projectBase = new ProjectBase("ProjectBaseName", "Project Base decsiption");
-    projectBasesToAdd.add(projectBase);
-    HttpEntity<List<ProjectBase>> request = new HttpEntity<>(projectBasesToAdd);
+    List<Template> projectBasesToAdd = new ArrayList<>();
+    Template template = new Template("Project Base Name", "Project Base description");
+    projectBasesToAdd.add(template);
+    HttpEntity<List<Template>> request = new HttpEntity<>(projectBasesToAdd);
     ResponseEntity<ArrayList> responseEntity = restTemplate
-      .exchange("http://localhost:" + port + "api/projectBases",HttpMethod.POST,request, ArrayList.class);
+      .exchange("http://localhost:" + port + "api/templates",HttpMethod.POST,request, ArrayList.class);
     Object body = responseEntity.getBody();
     // we are expecting that return Project Base should have id 1
-    projectBase.setId(1L);
+    template.setId(1L);
     assertThat(body, CoreMatchers.notNullValue());
   }
 }

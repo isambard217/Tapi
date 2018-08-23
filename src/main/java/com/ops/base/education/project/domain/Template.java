@@ -5,8 +5,8 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Entity
-@Table(name = "project_bases")
-public class ProjectBase extends AuditEntity {
+@Table(name = "templates")
+public class Template extends AuditEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
@@ -20,9 +20,9 @@ public class ProjectBase extends AuditEntity {
   @Lob
   private String description;
 
-  public ProjectBase(){super();}
+  public Template(){super();}
 
-  public ProjectBase(String name, String description){
+  public Template(String name, String description){
     super();
     this.name = name;
     this.description = description;

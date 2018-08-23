@@ -19,14 +19,14 @@ public class Project extends AuditEntity{
   private String sampleDataFileName;
 
   @ManyToOne
-  @JoinColumn(name = "project_base_id") // foreign key column
+  @JoinColumn(name = "template_id") // foreign key column
   @OnDelete(action = OnDeleteAction.CASCADE)
-  private ProjectBase projectBase;
+  private Template template;
 
-  public Project(String sampleDataFileName, ProjectBase projectBase) {
+  public Project(String sampleDataFileName, Template template) {
     super();
     setSampleDataFileName(sampleDataFileName);
-    this.projectBase = projectBase;
+    this.template = template;
   }
   public String getSampleDataFileName() {
     return sampleDataFileName;
@@ -45,12 +45,12 @@ public class Project extends AuditEntity{
     return this;
   }
 
-  public ProjectBase getProjectBase() {
-    return projectBase;
+  public Template getTemplate() {
+    return template;
   }
 
-  public Project setProjectBase(ProjectBase projectBase) {
-    this.projectBase = projectBase;
+  public Project setTemplate(Template template) {
+    this.template = template;
     return this;
   }
   public Project(){super();}
