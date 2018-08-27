@@ -1,0 +1,11 @@
+Technique Name,Brief Description
+Atomic Absorption Spectroscopy,Good for heavy metal analysis. Can only determine the concentration of one element at a time. Good for determining accurate concentrations. Can detect low concentrations.
+Inductive Coupled Plasma - Mass Spectrometry,Scans for all metals. Gives a mass spectrum of elements present in a sample. Not good for determining accurate concentrations.
+X-ray Fluorescence Spectroscopy,Scans for all metals. Gives a XRF spectrum. Good for determining the presence of elements in high concentration in the sample. 
+Electrogravimetric Analysis,Good for heavy metal analysis. Can only determine the concentration of one element at a time. Good for determining accurate concentrations. Good for metals in high concentration.
+Qualitative Spot Test,Good for determining the presence of a particular element  in the sample. 
+Thin Layer Chromatography,Good for determining the presence of some organic species.
+Gun Shot Residue Test,Determines the presence of gun shot residue on a sample.
+Density Test,Determines the density of a given sample.
+Magnetic Test,Determines if a sample is magnetic or not.
+pH Test,Tests the pH (H+ concentration) of a given solution

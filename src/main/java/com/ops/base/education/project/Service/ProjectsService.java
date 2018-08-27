@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ProjectsService {
@@ -31,13 +32,14 @@ public class ProjectsService {
     this.studentsRepository = studentsRepository;
   }
 
-  public List<Achievable> getProjects(Long stuentId){
+  public List<Achievable> getProjects(Long studentId){
     List<Achievable> projects = new ArrayList<>();
     Student student;
-    logger.debug("checking if student with id: " + stuentId + " exists?");
-    if(this.studentsRepository.findById(stuentId).isPresent()) {
-      student = this.studentsRepository.findById(stuentId).get();
-      logger.debug("getting project object from student" + student.getFirstName() + " " + student.getLastName());
+    Optional<Student> returnEntity = this.studentsRepository.findById(studentId);
+    logger.debug("checking if student with id: " + studentId + " exists?");
+    if(returnEntity.isPresent()) {
+      student = returnEntity.get();
+      logger.debug("getting project object from student" + student.getFirstName() + " " + student.getLastName() + "Entity");
       Project project = student.getProject();
       if (project != null) {
         projects.add(project);
