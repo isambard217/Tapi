@@ -6,7 +6,7 @@ import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "templates")
-public class Template extends AuditEntity {
+public class Template extends AuditEntity implements Achievable {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
@@ -33,4 +33,14 @@ public class Template extends AuditEntity {
   }
 
   public String getDescription(){ return this.description; }
+
+  /**
+   * The dream is to make this method get final project result for the lecturer
+   *
+   * @return The ratio of student project achievement to ideal achievement to solve project puzzle
+   */
+  @Override
+  public double getAchievingPercent() {
+    return 0;
+  }
 }

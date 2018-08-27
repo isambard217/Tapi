@@ -9,36 +9,48 @@ public class Student extends AuditEntity{
 	@Id
 	@GeneratedValue
 	private Long Id;
-	
-	private String firstname;
-	
-	public Long getId() {
-		return Id;
-	}
-	public void setId(Long id) {
-		Id = id;
-	}
-	public String getFirstname() {
-		return firstname;
-	}
-	public void setFirstname(String firstname) {
-		this.firstname = firstname;
-	}
-	public String getLastname() {
-		return lastname;
-	}
-	public void setLastname(String lastname) {
-		this.lastname = lastname;
-	}
-	private String lastname;
+	private String firstName;
+	private String lastName;
+	@OneToOne
+  private Project project;
 
 	public Student(){super();}
 
-	public Student(String firstname, String surname) {
+	public Student(String firstName, String surname) {
 		super();
-		this.firstname = firstname;
-		this.lastname = surname;
-		
+		this.firstName = firstName;
+		this.lastName = surname;
 	}
-	
+
+  public Long getId() {
+    return Id;
+  }
+
+  public void setId(Long id) {
+    Id = id;
+  }
+
+  public String getFirstName() {
+    return firstName;
+  }
+
+  public void setFirstName(String firstName) {
+    this.firstName = firstName;
+  }
+
+  public String getLastName() {
+    return lastName;
+  }
+
+  public void setLastName(String lastName) {
+    this.lastName = lastName;
+  }
+
+  public Project getProject() {
+    return project;
+  }
+
+  public void setProject(Project project) {
+    this.project = project;
+  }
 }

@@ -1,12 +1,10 @@
 package com.ops.base.education.project.routes;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.ops.base.education.project.domain.Student;
 import com.ops.base.education.project.Service.StudentsService;
@@ -16,18 +14,15 @@ import com.ops.base.education.project.Service.StudentsService;
 public class Students {
 	
 	@Autowired
-	StudentsService us;
+	StudentsService studentsService;
 	
 	@GetMapping
 	public ArrayList<Student> getStudents() {
-		return us.getStudnets();
+		return studentsService.getStudnets();
 	}
 	
 	@PostMapping
-	public String addStudents() {
-		
-		us.save(new Student("bob", "wills"));
-		
-		return "Students added";
+	public List<Student> addStudents(@RequestBody ArrayList<Student> students) {
+		return this.studentsService.saveAll(students);
 	}
 }
