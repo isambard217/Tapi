@@ -1,31 +1,14 @@
 package com.ops.base.education.project.routes;
 
-import com.ops.base.education.project.Repository.TechniquesRepository;
-import com.ops.base.education.project.domain.Technique;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
-import java.util.List;
-
-@RequestMapping("/api/techniques")
+@RequestMapping("/api/Techniques")
 @RestController
 public class Techniques {
-	private TechniquesRepository techniquesRepository;
-
-  @Autowired
-  public Techniques(TechniquesRepository techniquesRepository){
-    this.techniquesRepository = techniquesRepository;
-  }
-
 	@GetMapping
-	public List<Technique> list() {
-		return (ArrayList<Technique>)this.techniquesRepository.findAll();
+	public String getTech() {
+		return "tech not availble";
 	}
-
-	@PostMapping
-  public List<Technique> add(@RequestBody List<Technique> techniques){
-    return (ArrayList<Technique>) this.techniquesRepository.saveAll(techniques);
-  }
-
 }
