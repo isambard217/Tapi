@@ -1,5 +1,6 @@
 package com.ops.base.education.project.routes;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,11 +12,15 @@ import com.ops.base.education.project.Service.StudentsService;
 
 @RestController
 @RequestMapping("api/students")
-public class Students {
+public class Students{
 	
+	private final	StudentsService studentsService;
+
 	@Autowired
-	StudentsService studentsService;
-	
+	public Students(StudentsService studentsService) {
+		this.studentsService = studentsService;
+	}
+
 	@GetMapping
 	public ArrayList<Student> getStudents() {
 		return studentsService.getStudnets();

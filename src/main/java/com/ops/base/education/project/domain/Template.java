@@ -1,27 +1,18 @@
 package com.ops.base.education.project.domain;
-
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "templates")
-public class Template extends AuditEntity implements Achievable {
+public class Template implements Achievable, Serializable {
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @GeneratedValue
   private Long id;
-
-  @NotNull
-  @Size(max = 100)
   @Column(unique = true)
   private String name;
-
-  @NotNull
   @Lob
   private String description;
-
   public Template(){super();}
-
   public Template(String name, String description){
     super();
     this.name = name;
@@ -31,9 +22,7 @@ public class Template extends AuditEntity implements Achievable {
   public String getName() {
     return this.name;
   }
-
   public String getDescription(){ return this.description; }
-
   /**
    * The dream is to make this method get final project result for the lecturer
    *

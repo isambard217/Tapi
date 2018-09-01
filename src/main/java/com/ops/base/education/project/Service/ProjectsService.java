@@ -1,5 +1,4 @@
 package com.ops.base.education.project.Service;
-
 import com.google.common.collect.Lists;
 import com.ops.base.education.project.Repository.ProjectRepository;
 import com.ops.base.education.project.Repository.StudentsRepository;
@@ -11,18 +10,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
 @Service
 public class ProjectsService {
   private ProjectRepository projectRepository;
   private TemplatesRepository templatesRepository;
   private StudentsRepository studentsRepository;
   private static Logger logger = LoggerFactory.getLogger(ProjectsService.class);
-
   @Autowired
   public ProjectsService(ProjectRepository projectRepository,
                          TemplatesRepository templatesRepository,
@@ -31,7 +27,6 @@ public class ProjectsService {
     this.templatesRepository = templatesRepository;
     this.studentsRepository = studentsRepository;
   }
-
   public List<Achievable> getProjects(Long studentId){
     List<Achievable> projects = new ArrayList<>();
     Student student;
