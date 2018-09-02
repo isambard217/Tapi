@@ -5,5 +5,5 @@ class SecurityConstants {
   static final String TOKEN_PREFIX = "Student ";
   static final String HEADER_STRING = "auth";
   static final String SIGN_UP_URL = "/api/students";
-  static final String LOG_IN_URL = "/login";
+  static final String LOG_IN_URL = "/v2/api/login";
 }
