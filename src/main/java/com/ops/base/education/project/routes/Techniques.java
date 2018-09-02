@@ -12,27 +12,22 @@ import java.util.List;
 @RestController
 public class Techniques {
 	private TechniquesRepository techniquesRepository;
-
   @Autowired
   public Techniques(TechniquesRepository techniquesRepository){
     this.techniquesRepository = techniquesRepository;
   }
-
 	@GetMapping
-	public List<Technique> list() {
+	public List<Technique> list(@RequestHeader String auth) {
 		return (ArrayList<Technique>)this.techniquesRepository.findAll();
 	}
-
 	@PostMapping
   public List<Technique> add(@RequestBody List<Technique> techniques){
     return (ArrayList<Technique>) this.techniquesRepository.saveAll(techniques);
   }
-
   @PutMapping
   public List<Technique> update(@RequestBody List<Technique> techniques){
     return (ArrayList<Technique>) this.techniquesRepository.saveAll(techniques);
   }
-
   @DeleteMapping
   public String remove(@RequestParam Long id){
     this.techniquesRepository.deleteById(id);

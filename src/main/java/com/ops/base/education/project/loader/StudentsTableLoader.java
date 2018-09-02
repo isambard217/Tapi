@@ -21,8 +21,12 @@ public class StudentsTableLoader implements CommandLineRunner {
   @Override
   public void run(String... args) throws Exception {
     ArrayList<Student> users = new ArrayList<>(1);
-        Student alhaytham = new Student("ate5", "login227", "Basic");
-        users.add(alhaytham);
+        Student ate5 = new Student("ate5", "app@login227", "Basic");
+        Student cje8 = new Student("cje8", "app@login227", "Basic");
+        Student iwa4 = new Student("iwa4", "app@login227", "Basic");
+        users.add(ate5);
+        users.add(cje8);
+        users.add(iwa4);
         studentsService.saveAll(users);
   }
 }
