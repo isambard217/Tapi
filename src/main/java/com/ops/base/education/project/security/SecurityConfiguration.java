@@ -1,4 +1,5 @@
 package com.ops.base.education.project.security;
+import com.ops.base.education.project.configuration.EduProjectManagerCORSConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -16,10 +17,14 @@ import static com.ops.base.education.project.security.SecurityConstants.SIGN_UP_
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
   private UserDetailsService userDetailsService;
   private BCryptPasswordEncoder bCryptPasswordEncoder;
+  private EduProjectManagerCORSConfiguration corsConfiguration;
   @Autowired
-  public SecurityConfiguration(StudentDetailService userDetailsService, BCryptPasswordEncoder bCryptPasswordEncoder){
+  public SecurityConfiguration(StudentDetailService userDetailsService,
+                               BCryptPasswordEncoder bCryptPasswordEncoder,
+                               EduProjectManagerCORSConfiguration corsConfiguration){
     setUserDetailsService(userDetailsService);
     setBCryptPasswordEncoder(bCryptPasswordEncoder);
+    setCorsConfiguration(corsConfiguration);
   }
   @Override
   protected void configure(HttpSecurity httpSecurity) throws Exception {
@@ -57,5 +62,17 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
   }
   private BCryptPasswordEncoder getBCryptPasswordEncoder(){
     return this.bCryptPasswordEncoder;
+  }
+  public BCryptPasswordEncoder getbCryptPasswordEncoder() {
+    return bCryptPasswordEncoder;
+  }
+  public void setbCryptPasswordEncoder(BCryptPasswordEncoder bCryptPasswordEncoder) {
+    this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+  }
+  public EduProjectManagerCORSConfiguration getCorsConfiguration() {
+    return corsConfiguration;
+  }
+  public void setCorsConfiguration(EduProjectManagerCORSConfiguration corsConfiguration) {
+    this.corsConfiguration = corsConfiguration;
   }
 }
