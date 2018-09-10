@@ -1,7 +1,7 @@
 package com.ops.base.education.project;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import com.ops.base.education.project.routes.Students;
+import com.ops.base.education.project.routes.ApiUsers;
 import com.ops.base.education.project.routes.Techniques;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,12 +13,12 @@ import org.springframework.test.context.junit4.SpringRunner;
 @SpringBootTest
 public class EduProjectManagerTests {
 	@Autowired
-	private Students students;
+	private ApiUsers apiUsers;
 	@Autowired
   Techniques techniques;
 	@Test
 	public void contextLoads() throws  Exception{
-	    assertThat(students).isNotNull();
+	    assertThat(apiUsers).isNotNull();
 	    assertThat(techniques).isNotNull();
     }
 

@@ -15,11 +15,11 @@ import static com.ops.base.education.project.security.SecurityConstants.LOG_IN_U
 import static com.ops.base.education.project.security.SecurityConstants.SIGN_UP_URL;
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
-  private UserDetailsService userDetailsService;
+  private ApiUserDetailsService userDetailsService;
   private BCryptPasswordEncoder bCryptPasswordEncoder;
   private EduProjectManagerCORSConfiguration corsConfiguration;
   @Autowired
-  public SecurityConfiguration(StudentDetailService userDetailsService,
+  public SecurityConfiguration(ApiUserDetailsService userDetailsService,
                                BCryptPasswordEncoder bCryptPasswordEncoder,
                                EduProjectManagerCORSConfiguration corsConfiguration){
     setUserDetailsService(userDetailsService);
@@ -33,7 +33,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
       .anyRequest().authenticated()
       .and()
       .addFilter(getJwtAuthenticationFilter(authenticationManager()))
-      .addFilter(new AuthoriseFilter(authenticationManager()))
+      .addFilter(new AuthoriseFilter(authenticationManager(), this.userDetailsService))
       .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
   }
   private AuthFilter getJwtAuthenticationFilter(AuthenticationManager authenticationManager) {
@@ -51,7 +51,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
   public void configure(WebSecurity web) throws Exception {
     web.ignoring().antMatchers("/v2/api-docs", "/configuration/ui", "/swagger-resources/**", "/configuration/**", "/swagger-ui.html", "/webjars/**");
   }
-  private void setUserDetailsService(UserDetailsService userDetailsService) {
+  private void setUserDetailsService(ApiUserDetailsService userDetailsService) {
     this.userDetailsService = userDetailsService;
   }
   private UserDetailsService getUserDetailsService(){

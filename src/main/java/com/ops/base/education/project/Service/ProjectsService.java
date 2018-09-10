@@ -1,11 +1,11 @@
 package com.ops.base.education.project.Service;
 import com.google.common.collect.Lists;
 import com.ops.base.education.project.Repository.ProjectRepository;
-import com.ops.base.education.project.Repository.StudentsRepository;
+import com.ops.base.education.project.Repository.ApiUsersRepository;
 import com.ops.base.education.project.Repository.TemplatesRepository;
 import com.ops.base.education.project.domain.Achievable;
+import com.ops.base.education.project.domain.ApiUser;
 import com.ops.base.education.project.domain.Project;
-import com.ops.base.education.project.domain.Student;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,25 +17,25 @@ import java.util.Optional;
 public class ProjectsService {
   private ProjectRepository projectRepository;
   private TemplatesRepository templatesRepository;
-  private StudentsRepository studentsRepository;
+  private ApiUsersRepository apiUsersRepository;
   private static Logger logger = LoggerFactory.getLogger(ProjectsService.class);
   @Autowired
   public ProjectsService(ProjectRepository projectRepository,
                          TemplatesRepository templatesRepository,
-                         StudentsRepository studentsRepository) {
+                         ApiUsersRepository apiUsersRepository) {
     this.projectRepository = projectRepository;
     this.templatesRepository = templatesRepository;
-    this.studentsRepository = studentsRepository;
+    this.apiUsersRepository = apiUsersRepository;
   }
   public List<Achievable> getProjects(Long studentId){
     List<Achievable> projects = new ArrayList<>();
-    Student student;
-    Optional<Student> returnEntity = this.studentsRepository.findById(studentId);
-    logger.debug("checking if student with id: " + studentId + " exists?");
+    ApiUser apiUser;
+    Optional<ApiUser> returnEntity = this.apiUsersRepository.findById(studentId);
+    logger.debug("checking if apiUser with id: " + studentId + " exists?");
     if(returnEntity.isPresent()) {
-      student = returnEntity.get();
-      logger.debug("getting project object from student" + student.getFirstName() + " " + student.getLastName() + "Entity");
-      Project project = student.getProject();
+      apiUser = returnEntity.get();
+      logger.debug("getting project object from apiUser" + apiUser.getFirstName() + " " + apiUser.getLastName() + "Entity");
+      Project project = apiUser.getProject();
       if (project != null) {
         projects.add(project);
       } else {

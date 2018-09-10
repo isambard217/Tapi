@@ -9,8 +9,8 @@
 //
 //import java.util.ArrayList;
 //
-//import com.ops.base.education.project.Service.StudentsService;
-//import com.ops.base.education.project.domain.Student;
+//import com.ops.base.education.project.Service.ApiUsersService;
+//import com.ops.base.education.project.domain.ApiUser;
 //import org.junit.Test;
 //import org.junit.runner.RunWith;
 //import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +20,7 @@
 //import org.springframework.test.web.servlet.MockMvc;
 //
 //@RunWith(SpringRunner.class)
-//@WebMvcTest(Students.class)
+//@WebMvcTest(ApiUsers.class)
 //public class StudentRoutMockTest {
 //
 //  @Autowired
@@ -29,14 +29,14 @@
 //  public StudentRoutMockTest(){}
 //
 //	@MockBean
-//	private StudentsService studentsService;
+//	private ApiUsersService studentsService;
 //
 //	@Test
 //	public void getStudentsShouldReturnAllUserRecordsStored() throws Exception {
 //		// given
-//		Student alhaytham = new Student("Alhaytham", "Elhassan");
-//		Student isambard = new Student("Isambard", "Chey");
-//		ArrayList<Student> students = new ArrayList<>();
+//		ApiUser alhaytham = new ApiUser("Alhaytham", "Elhassan");
+//		ApiUser isambard = new ApiUser("Isambard", "Chey");
+//		ArrayList<ApiUser> students = new ArrayList<>();
 //		students.add(alhaytham);
 //		students.add(isambard);
 //		when(studentsService.getStudnets()).thenReturn(students);

@@ -15,8 +15,10 @@ import static com.ops.base.education.project.security.SecurityConstants.SECRET;
 import static com.ops.base.education.project.security.SecurityConstants.TOKEN_PREFIX;
 import static java.util.Collections.emptyList;
 class AuthoriseFilter extends BasicAuthenticationFilter {
-  AuthoriseFilter(AuthenticationManager authenticationManager) {
+  private final ApiUserDetailsService apiUserDetailsService;
+  AuthoriseFilter(AuthenticationManager authenticationManager, ApiUserDetailsService apiUserDetailsService) {
     super(authenticationManager);
+    this.apiUserDetailsService = apiUserDetailsService;
   }
   @Override
   protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
@@ -40,7 +42,8 @@ class AuthoriseFilter extends BasicAuthenticationFilter {
         .getBody()
         .getSubject();
       if (user != null) {
-        return new UsernamePasswordAuthenticationToken(user, null, emptyList());
+        return new UsernamePasswordAuthenticationToken(user, null,
+          this.apiUserDetailsService.loadUserByUsername(user).getAuthorities());
       }
       return null;
     }

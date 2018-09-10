@@ -1,6 +1,6 @@
 package com.ops.base.education.project.security;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.ops.base.education.project.domain.Student;
+import com.ops.base.education.project.domain.ApiUser;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.slf4j.Logger;
@@ -19,34 +19,32 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Date;
-
 import static com.ops.base.education.project.security.SecurityConstants.*;
-
 class AuthFilter extends UsernamePasswordAuthenticationFilter {
   private AuthenticationManager authenticationManager;
-  private static Logger debugLogger = LoggerFactory.getLogger(AuthFilter.class);
+  private static Logger authLogger = LoggerFactory.getLogger(AuthFilter.class);
   AuthFilter(AuthenticationManager authenticationManager) {
     this.authenticationManager = authenticationManager;
   }
   @Override
   public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
     throws AuthenticationException {
-    debugLogger.debug("Attempt to authenticate a web service user ...");
+    authLogger.debug("Attempt to authenticate a web service user ...");
     try {
-      Student student = new ObjectMapper()
-        .readValue(request.getInputStream(), Student.class);
-      debugLogger.debug("User mapped from request input stream is with:\n userName:"
-        + student.getUserName() + "\n password: " + "are you kidding ...\n" +
+      UserCredentails userCredentails = new ObjectMapper()
+        .readValue(request.getInputStream(), UserCredentails.class);
+      authLogger.debug("User mapped from request input stream is with:\n userName:"
+        + userCredentails.getUserName() + "\n password: " + "are you kidding ...\n" +
         "will try to return authentication object to be ultimately stored in Security context holder" +
         "or otherwise will fire IOException and throwing a run time exception for spring app to handle");
       Authentication authentication =  authenticationManager.authenticate(
-        new UsernamePasswordAuthenticationToken(student.getUserName(), student.getPassword(),
+        new UsernamePasswordAuthenticationToken(userCredentails.getUserName(), userCredentails.getPassword(),
           new ArrayList<>()));
-      debugLogger.debug("... \n returning authentication object to the caller \n ...");
+      authLogger.debug("... \n returning authentication object to the caller \n ...");
       return authentication;
     } catch (IOException e){
-      debugLogger.debug("... \n bad new exception ...\n");
-      debugLogger.error(e.getMessage());
+      authLogger.debug("... \n bad new exception ...\n");
+      authLogger.error(e.getMessage());
       throw new RuntimeException(e);
     }
   }
@@ -62,7 +60,7 @@ class AuthFilter extends UsernamePasswordAuthenticationFilter {
     try {
       response.getWriter().write(TOKEN_PREFIX + jwtToken);
     } catch (Exception e) {
-      debugLogger.warn(e.getMessage());
+      authLogger.warn(e.getMessage());
       throw (e);
     }
     response.setStatus(HttpServletResponse.SC_ACCEPTED);
