@@ -1,5 +1,5 @@
 package com.ops.base.education.project.security;
-import com.ops.base.education.project.configuration.EduProjectManagerCORSConfiguration;
+import com.ops.base.education.project.configuration.CorsFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -11,24 +11,26 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.access.channel.ChannelProcessingFilter;
+
 import static com.ops.base.education.project.security.SecurityConstants.LOG_IN_URL;
 import static com.ops.base.education.project.security.SecurityConstants.SIGN_UP_URL;
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
   private ApiUserDetailsService userDetailsService;
   private BCryptPasswordEncoder bCryptPasswordEncoder;
-  private EduProjectManagerCORSConfiguration corsConfiguration;
+  private CorsFilter corsFilter;
   @Autowired
   public SecurityConfiguration(ApiUserDetailsService userDetailsService,
                                BCryptPasswordEncoder bCryptPasswordEncoder,
-                               EduProjectManagerCORSConfiguration corsConfiguration){
+                               CorsFilter corsFilter){
     setUserDetailsService(userDetailsService);
     setBCryptPasswordEncoder(bCryptPasswordEncoder);
-    setCorsConfiguration(corsConfiguration);
+    setCorsFilter(corsFilter);
   }
   @Override
   protected void configure(HttpSecurity httpSecurity) throws Exception {
-    httpSecurity.cors().and().csrf().disable().authorizeRequests()
+    httpSecurity.addFilterBefore(this.corsFilter, ChannelProcessingFilter.class).csrf().disable().authorizeRequests()
       .antMatchers(HttpMethod.POST, SIGN_UP_URL).permitAll()
       .anyRequest().authenticated()
       .and()
@@ -69,10 +71,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
   public void setbCryptPasswordEncoder(BCryptPasswordEncoder bCryptPasswordEncoder) {
     this.bCryptPasswordEncoder = bCryptPasswordEncoder;
   }
-  public EduProjectManagerCORSConfiguration getCorsConfiguration() {
-    return corsConfiguration;
+  public CorsFilter getCorsFilter() {
+    return corsFilter;
   }
-  public void setCorsConfiguration(EduProjectManagerCORSConfiguration corsConfiguration) {
-    this.corsConfiguration = corsConfiguration;
+  public void setCorsFilter(CorsFilter corsFilter) {
+    this.corsFilter = corsFilter;
   }
 }
