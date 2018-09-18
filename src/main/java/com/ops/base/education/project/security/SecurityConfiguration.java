@@ -13,8 +13,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.access.channel.ChannelProcessingFilter;
 
-import static com.ops.base.education.project.security.SecurityConstants.LOG_IN_URL;
-import static com.ops.base.education.project.security.SecurityConstants.SIGN_UP_URL;
+import static com.ops.base.education.project.security.PrivateSecurityConstants.LOG_IN_URL;
+import static com.ops.base.education.project.security.PrivateSecurityConstants.SIGN_UP_URL;
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
   private ApiUserDetailsService userDetailsService;

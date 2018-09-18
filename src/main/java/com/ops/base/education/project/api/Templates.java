@@ -1,4 +1,4 @@
-package com.ops.base.education.project.routes;
+package com.ops.base.education.project.api;
 import com.ops.base.education.project.domain.Template;
 import com.ops.base.education.project.Repository.TemplatesRepository;
 import org.springframework.beans.factory.annotation.Autowired;

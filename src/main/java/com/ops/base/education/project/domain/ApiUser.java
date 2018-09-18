@@ -1,13 +1,10 @@
 package com.ops.base.education.project.domain;
-import cucumber.api.java.ro.Si;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
-
 /**
  * @author alhaytham
  * At the moment we have two types of system user:
@@ -27,9 +24,9 @@ public class ApiUser implements Serializable {
 	private String password;
 	@ManyToMany
   @JoinTable(
-    name = "system_users_roles",
+    name = "api_users_roles",
     joinColumns = @JoinColumn(
-      name = "system_user_id", referencedColumnName = "id"),
+      name = "api_user_id", referencedColumnName = "id"),
     inverseJoinColumns = @JoinColumn(
       name = "role_id", referencedColumnName = "id"))
 	private Collection<Role> roles;

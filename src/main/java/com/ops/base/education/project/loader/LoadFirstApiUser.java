@@ -16,10 +16,14 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import static com.ops.base.education.project.security.PublicSecurityConstants.API_PASSWORD;
+import static com.ops.base.education.project.security.PublicSecurityConstants.API_USER_NAME;
+
 @Component
 @Transactional
 public class LoadFirstApiUser implements CommandLineRunner {
-  private static Logger logger;
+  private final Logger logger;
   private final ApiUsersService apiUsersService;
   private final PrivilegesRepository privilegesRepository;
   private final RolesRepository rolesRepository;
@@ -60,7 +64,7 @@ public class LoadFirstApiUser implements CommandLineRunner {
     Role roleAdmin = createRoleIfNotFound("ROLE_ADMIN", adminPrivileges);
     logger.debug("Role admin created ... " + roleAdmin.getName());
     logger.debug("creating first apiUser with ROLE_ADMIN aka first api user that can create other users");
-    ApiUser firstApiUser = createUserIfNotFound("ate5", "app@login227", "Alhaytham",
+    ApiUser firstApiUser = createUserIfNotFound(API_USER_NAME, API_PASSWORD, "Alhaytham",
       "Elhassan", "ate5@student.le.ac.uk", new ArrayList<Role>(Arrays.asList(roleAdmin)));
     logger.debug("Admin user created successfully ... " + firstApiUser.isEnabled());
   }

@@ -1,11 +1,11 @@
 package com.ops.base.education.project.security;
 import java.io.Serializable;
-public class UserCredentails implements Serializable {
+public class ApiUserCredentials implements Serializable {
   private String userName;
   private String password;
-  UserCredentails(){
+  public ApiUserCredentials(){
   }
-  UserCredentails(String userName, String password) {
+  public ApiUserCredentials(String userName, String password) {
     this.userName = userName;
     this.password = password;
   }

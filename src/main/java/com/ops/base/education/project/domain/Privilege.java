@@ -1,4 +1,6 @@
 package com.ops.base.education.project.domain;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Collection;
@@ -28,6 +30,7 @@ public class Privilege implements Serializable {
   public void setName(String name) {
     this.name = name;
   }
+  @JsonIgnore
   public Collection<Role> getRoles() {
     return roles;
   }

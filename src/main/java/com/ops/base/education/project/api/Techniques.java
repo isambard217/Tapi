@@ -1,4 +1,4 @@
-package com.ops.base.education.project.routes;
+package com.ops.base.education.project.api;
 
 import com.ops.base.education.project.Repository.TechniquesRepository;
 import com.ops.base.education.project.domain.Technique;

@@ -1,6 +1,5 @@
 package com.ops.base.education.project.security;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.ops.base.education.project.domain.ApiUser;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.slf4j.Logger;
@@ -19,7 +18,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Date;
-import static com.ops.base.education.project.security.SecurityConstants.*;
+import static com.ops.base.education.project.security.PrivateSecurityConstants.*;
 class AuthFilter extends UsernamePasswordAuthenticationFilter {
   private AuthenticationManager authenticationManager;
   private static Logger authLogger = LoggerFactory.getLogger(AuthFilter.class);
@@ -31,14 +30,14 @@ class AuthFilter extends UsernamePasswordAuthenticationFilter {
     throws AuthenticationException {
     authLogger.debug("Attempt to authenticate a web service user ...");
     try {
-      UserCredentails userCredentails = new ObjectMapper()
-        .readValue(request.getInputStream(), UserCredentails.class);
+      ApiUserCredentials apiUserCredentials = new ObjectMapper()
+        .readValue(request.getInputStream(), ApiUserCredentials.class);
       authLogger.debug("User mapped from request input stream is with:\n userName:"
-        + userCredentails.getUserName() + "\n password: " + "are you kidding ...\n" +
+        + apiUserCredentials.getUserName() + "\n password: " + "are you kidding ...\n" +
         "will try to return authentication object to be ultimately stored in Security context holder" +
         "or otherwise will fire IOException and throwing a run time exception for spring app to handle");
       Authentication authentication =  authenticationManager.authenticate(
-        new UsernamePasswordAuthenticationToken(userCredentails.getUserName(), userCredentails.getPassword(),
+        new UsernamePasswordAuthenticationToken(apiUserCredentials.getUserName(), apiUserCredentials.getPassword(),
           new ArrayList<>()));
       authLogger.debug("... \n returning authentication object to the caller \n ...");
       return authentication;
@@ -56,7 +55,6 @@ class AuthFilter extends UsernamePasswordAuthenticationFilter {
       .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
       .signWith(SignatureAlgorithm.HS512, SECRET.getBytes(StandardCharsets.UTF_8))
       .compact();
-    response.setHeader(HEADER_STRING, TOKEN_PREFIX + jwtToken);
     try {
       response.getWriter().write(TOKEN_PREFIX + jwtToken);
     } catch (Exception e) {

@@ -10,10 +10,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import static com.ops.base.education.project.security.SecurityConstants.HEADER_STRING;
-import static com.ops.base.education.project.security.SecurityConstants.SECRET;
-import static com.ops.base.education.project.security.SecurityConstants.TOKEN_PREFIX;
-import static java.util.Collections.emptyList;
+import static com.ops.base.education.project.security.PrivateSecurityConstants.HEADER_STRING;
+import static com.ops.base.education.project.security.PrivateSecurityConstants.SECRET;
+import static com.ops.base.education.project.security.PrivateSecurityConstants.TOKEN_PREFIX;
+
 class AuthoriseFilter extends BasicAuthenticationFilter {
   private final ApiUserDetailsService apiUserDetailsService;
   AuthoriseFilter(AuthenticationManager authenticationManager, ApiUserDetailsService apiUserDetailsService) {

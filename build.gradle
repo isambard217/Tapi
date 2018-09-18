@@ -11,17 +11,22 @@ buildscript {
 }
 plugins {
     id "org.sonarqube" version "2.6.2"
+	id "net.ltgt.errorprone" version "0.0.16"
 }
 apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
+apply plugin: 'findbugs'
 apply plugin: 'idea'
+findbugs {
+    sourceSets = [sourceSets.main]
+}
 group = 'com.ops.base'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = 1.8
 bootJar {
-	baseName='Education-Project-Api'
+	baseName='edu-project-manager'
 	version='0.0.1'
 }
 repositories {
@@ -38,7 +43,7 @@ dependencies {
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 	testCompile('org.springframework.security:spring-security-test')
 	// https://mvnrepository.com/artifact/mysql/mysql-connector-java
-	//compile group: 'mysql', name: 'mysql-connector-java', version: '8.0.11'
+	compile group: 'mysql', name: 'mysql-connector-java', version: '8.0.11'
 	compile("com.h2database:h2")
 	// https://mvnrepository.com/artifact/io.cucumber/cucumber-java
 	compile group: 'io.cucumber', name: 'cucumber-java', version: '3.0.2'
@@ -57,7 +62,20 @@ task cucumber(dependsOn: testClasses) {
         }
     }
 }
+tasks.withType(FindBugs) {
+    reports {
+        xml.enabled false
+        html.enabled true
+    }
+}
 task wrapper(type: Wrapper) {
     gradleVersion = '4.6'
 }
-
+tasks.withType(JavaCompile) {
+    // In Gradle 4.9+, prefer using tasks.withType(JavaCompile).configureEach {
+    options.compilerArgs += [
+            '-Xep:DeadException:ERROR',
+            '-Xep:ReferenceEquality:ERROR'
+    ]
+    options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
+}
