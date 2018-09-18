@@ -38,8 +38,7 @@ jobs:
             - ~/.gradle
           key: v1-dependencies-{{ checksum "build.gradle" }}
 
-      # run tests!
-      - run: gradle test
+      # run checks gooogle error prone and findBugs at this moment of this commit, and tests!
       - run: gradle check
       - store_artifacts:
           path: build/reports/
