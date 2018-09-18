@@ -31,7 +31,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
   @Override
   protected void configure(HttpSecurity httpSecurity) throws Exception {
     httpSecurity.addFilterBefore(this.corsFilter, ChannelProcessingFilter.class).csrf().disable().authorizeRequests()
-      .antMatchers(HttpMethod.POST, SIGN_UP_URL).permitAll()
+      .antMatchers("/api/api_users").hasRole("ADMIN_PRIVILEGE")
+      .antMatchers(HttpMethod.POST, "/api/templates").hasRole("ADMIN_PRIVILEGE")
+      .antMatchers(HttpMethod.POST, "/api/techniques").hasRole("ADMIN_PRIVILEGE")
       .anyRequest().authenticated()
       .and()
       .addFilter(getJwtAuthenticationFilter(authenticationManager()))
@@ -51,7 +53,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
   }
   @Override
   public void configure(WebSecurity web) throws Exception {
-    web.ignoring().antMatchers("/v2/api-docs", "/configuration/ui", "/swagger-resources/**", "/configuration/**", "/swagger-ui.html", "/webjars/**");
+    web.ignoring()
+      .antMatchers("/v2/api-docs", "/configuration/ui", "/swagger-resources/**",
+        "/configuration/**", "/swagger-ui.html", "/webjars/**");
   }
   private void setUserDetailsService(ApiUserDetailsService userDetailsService) {
     this.userDetailsService = userDetailsService;

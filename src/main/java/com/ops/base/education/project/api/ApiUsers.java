@@ -14,11 +14,11 @@ public class ApiUsers {
 		this.apiUsersService = apiUsersService;
 	}
 	@GetMapping
-	public @ResponseBody List<ApiUser> list() {
+	public @ResponseBody List<ApiUser> list(@RequestHeader String auth) {
 		return apiUsersService.getApiUsers();
 	}
 	@PostMapping
-	public @ResponseBody List<ApiUser> add(@RequestBody ArrayList<ApiUser> apiUsers) {
+	public @ResponseBody List<ApiUser> add(@RequestBody ArrayList<ApiUser> apiUsers, @RequestHeader String auth) {
 		return this.apiUsersService.addApiUsers(apiUsers);
 	}
 }

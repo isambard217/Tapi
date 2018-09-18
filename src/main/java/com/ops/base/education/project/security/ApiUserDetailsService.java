@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 @Service("userDetailsService")
-@Transactional
+@Transactional(readOnly = true)
 public class ApiUserDetailsService implements UserDetailsService {
   private final ApiUsersRepository apiUsersRepository;
   @Autowired
@@ -59,6 +59,8 @@ public class ApiUserDetailsService implements UserDetailsService {
    * ultimately the apiUser has on the api
    * @param roles Collection of Role
    * @return List of String that tell the security framework all the granted authorities or privileges the user has
+   * @see org.springframework.security.access.vote.RoleVoter is configured with a prefix i.e. ROLE that is why this
+   * method is returning ROLE as a prefix and the rest of the name just to make scense.
    */
   private List<String> getPrivileges(Collection<Role> roles) {
     List<String> grantedAuthorities;
@@ -68,7 +70,10 @@ public class ApiUserDetailsService implements UserDetailsService {
     }
     grantedAuthorities = new ArrayList<>(privileges.toArray().length);
     for (Privilege privilege: privileges){
-      grantedAuthorities.add(privilege.getName());
+      if(privilege.getName().equals("WRITE_PRIVILEGE"))
+        grantedAuthorities.add("ROLE_ADMIN_PRIVILEGE");
+      if(privilege.getName().equals("READ_PRIVILEGE"))
+        grantedAuthorities.add("ROLE_USER_PRIVILEGE");
     }
     return grantedAuthorities;
   }

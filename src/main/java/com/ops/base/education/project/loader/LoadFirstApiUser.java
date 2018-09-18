@@ -64,9 +64,15 @@ public class LoadFirstApiUser implements CommandLineRunner {
     Role roleAdmin = createRoleIfNotFound("ROLE_ADMIN", adminPrivileges);
     logger.debug("Role admin created ... " + roleAdmin.getName());
     logger.debug("creating first apiUser with ROLE_ADMIN aka first api user that can create other users");
-    ApiUser firstApiUser = createUserIfNotFound(API_USER_NAME, API_PASSWORD, "Alhaytham",
-      "Elhassan", "ate5@student.le.ac.uk", new ArrayList<Role>(Arrays.asList(roleAdmin)));
-    logger.debug("Admin user created successfully ... " + firstApiUser.isEnabled());
+    ApiUser admin = createUserIfNotFound(API_USER_NAME, API_PASSWORD, "Alhaytham as an admin",
+      "Elhassan as an admin", "admin@student.le.ac.uk", new ArrayList<Role>(Arrays.asList(roleAdmin)));
+    logger.debug("Admin user created successfully ... "+ admin.getFirstName()+ " isEnabled=" + admin.isEnabled());
+    ApiUser ate5 = createUserIfNotFound("ate5",API_PASSWORD,"Alhaytham as student",
+      " Elhassan as studnet", "ate5@student.le.ac.uk", new ArrayList<>(Arrays.asList(roleUser)));
+    logger.debug("A user with ROLE_USER is created successfully ... " + ate5.getFirstName() + " isEnabled="+ ate5.isEnabled());
+    ApiUser cje8 = createUserIfNotFound("cje8", API_PASSWORD, "Corey",
+      "Evans", "cje8@leicester.ac.uk", new ArrayList<Role>(Arrays.asList(roleAdmin)));
+    logger.debug("Admin user created successfully ... " + cje8.getFirstName() + " isEnabled=" + admin.isEnabled());
   }
   /**
    * A method to create an api user with a given roles

@@ -53,6 +53,7 @@ class AuthFilter extends UsernamePasswordAuthenticationFilter {
     String jwtToken = Jwts.builder()
       .setSubject(((User) authResult.getPrincipal()).getUsername())
       .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
+      .claim("authorities", ((User) authResult.getPrincipal()).getAuthorities().toArray())
       .signWith(SignatureAlgorithm.HS512, SECRET.getBytes(StandardCharsets.UTF_8))
       .compact();
     try {
