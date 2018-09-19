@@ -1,5 +1,7 @@
 package com.ops.base.education.project.security;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.ops.base.education.project.Service.ApiUsersService;
+import com.ops.base.education.project.domain.ApiUser;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.slf4j.Logger;
@@ -21,9 +23,11 @@ import java.util.Date;
 import static com.ops.base.education.project.security.PrivateSecurityConstants.*;
 class AuthFilter extends UsernamePasswordAuthenticationFilter {
   private AuthenticationManager authenticationManager;
+  private ApiUsersService apiUsersService;
   private static Logger authLogger = LoggerFactory.getLogger(AuthFilter.class);
-  AuthFilter(AuthenticationManager authenticationManager) {
+  AuthFilter(AuthenticationManager authenticationManager, ApiUsersService apiUsersService) {
     this.authenticationManager = authenticationManager;
+    this.apiUsersService = apiUsersService;
   }
   @Override
   public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
@@ -50,10 +54,14 @@ class AuthFilter extends UsernamePasswordAuthenticationFilter {
   @Override
   protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain,
                                           Authentication authResult) throws IOException, ServletException {
+    // load the user via api users service
+    ApiUser apiUser = this.apiUsersService.getApiUserByUserName(((User) authResult.getPrincipal()).getUsername());
     String jwtToken = Jwts.builder()
       .setSubject(((User) authResult.getPrincipal()).getUsername())
       .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
       .claim("authorities", ((User) authResult.getPrincipal()).getAuthorities().toArray())
+      .claim("firstName", apiUser.getFirstName())
+      .claim("lastName", apiUser.getLastName())
       .signWith(SignatureAlgorithm.HS512, SECRET.getBytes(StandardCharsets.UTF_8))
       .compact();
     try {

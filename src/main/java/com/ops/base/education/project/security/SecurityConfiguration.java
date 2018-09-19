@@ -1,4 +1,5 @@
 package com.ops.base.education.project.security;
+import com.ops.base.education.project.Service.ApiUsersService;
 import com.ops.base.education.project.configuration.CorsFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
@@ -20,13 +21,15 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
   private ApiUserDetailsService userDetailsService;
   private BCryptPasswordEncoder bCryptPasswordEncoder;
   private CorsFilter corsFilter;
+  private ApiUsersService apiUsersService;
   @Autowired
   public SecurityConfiguration(ApiUserDetailsService userDetailsService,
                                BCryptPasswordEncoder bCryptPasswordEncoder,
-                               CorsFilter corsFilter){
+                               CorsFilter corsFilter, ApiUsersService apiUsersService){
     setUserDetailsService(userDetailsService);
     setBCryptPasswordEncoder(bCryptPasswordEncoder);
     setCorsFilter(corsFilter);
+    this.apiUsersService = apiUsersService;
   }
   @Override
   protected void configure(HttpSecurity httpSecurity) throws Exception {
@@ -41,7 +44,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
       .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
   }
   private AuthFilter getJwtAuthenticationFilter(AuthenticationManager authenticationManager) {
-    AuthFilter authFilter = new AuthFilter(authenticationManager);
+    AuthFilter authFilter = new AuthFilter(authenticationManager, this.apiUsersService);
     authFilter.setFilterProcessesUrl(LOG_IN_URL);
     return authFilter;
   }

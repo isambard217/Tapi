@@ -28,4 +28,7 @@ public class ApiUsersService {
 		apiUsersRepository.saveAll(apiUsers);
 		return apiUsers;
 	}
+  public ApiUser getApiUserByUserName(String userName) {
+		return this.apiUsersRepository.findByUserName(userName);
+  }
 }
