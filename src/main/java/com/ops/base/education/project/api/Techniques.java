@@ -21,15 +21,15 @@ public class Techniques {
 		return (ArrayList<Technique>)this.techniquesRepository.findAll();
 	}
 	@PostMapping
-  public List<Technique> add(@RequestBody List<Technique> techniques){
+  public List<Technique> add(@RequestBody List<Technique> techniques, @RequestHeader String auth){
     return (ArrayList<Technique>) this.techniquesRepository.saveAll(techniques);
   }
   @PutMapping
-  public List<Technique> update(@RequestBody List<Technique> techniques){
+  public List<Technique> update(@RequestBody List<Technique> techniques, @RequestHeader String auth){
     return (ArrayList<Technique>) this.techniquesRepository.saveAll(techniques);
   }
   @DeleteMapping
-  public String remove(@RequestParam Long id){
+  public String remove(@RequestParam Long id, @RequestHeader String auth){
     this.techniquesRepository.deleteById(id);
     return "technique deleted successfully";
   }

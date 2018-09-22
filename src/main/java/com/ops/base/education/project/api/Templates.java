@@ -23,11 +23,11 @@ public class Templates {
     return (ArrayList<Template>) this.templatesRepository.findAll();
   }
   @PutMapping
-  List<Template> updateTemplates(@RequestBody List<Template> templates) {
+  List<Template> updateTemplates(@RequestBody List<Template> templates, @RequestHeader String auth) {
     return (ArrayList<Template>) this.templatesRepository.saveAll(templates);
   }
   @DeleteMapping
-  String deleteTemplate(@RequestParam Long id) {
+  String deleteTemplate(@RequestParam Long id, @RequestHeader String auth) {
     this.templatesRepository.deleteById(id);
     return "Template deleted successfully";
   }

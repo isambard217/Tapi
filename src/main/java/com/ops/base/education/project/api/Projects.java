@@ -24,22 +24,22 @@ public class Projects {
   }
 
   @GetMapping
-  public List<Achievable> getProjects(@RequestParam Long studentId){
+  public List<Achievable> getProjects(@RequestParam Long studentId, @RequestHeader String auth){
     return this.projectsService.getProjects(studentId);
   }
 
   @PostMapping
-  public List<Project> addProjects(@RequestBody List<Project> projects){
+  public List<Project> addProjects(@RequestBody List<Project> projects, @RequestHeader String auth){
     return (ArrayList<Project>) this.projectRepository.saveAll(projects);
   }
 
   @PutMapping
-  public List<Project> updateProjects(@RequestBody List<Project> projects) {
+  public List<Project> updateProjects(@RequestBody List<Project> projects, String auth) {
     return (ArrayList<Project>) this.projectRepository.saveAll(projects);
   }
 
   @DeleteMapping
-  String deleteProject(@RequestParam Long id) {
+  String deleteProject(@RequestParam Long id, String auth) {
     this.projectRepository.deleteById(id);
     return "Project deleted successfully";
   }
