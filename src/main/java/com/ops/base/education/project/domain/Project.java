@@ -2,8 +2,14 @@ package com.ops.base.education.project.domain;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import javax.persistence.*;
-import javax.validation.constraints.Size;
 import java.io.Serializable;
+/**
+ * @author alhaytham
+ * As this entity changing in its way to take its last release form
+ * It came to mind  that each project should have a seperate budget
+ * that make sence even for future verstions of this Entity of even the
+ * Entier Application.
+ */
 @Entity
 public class Project implements Achievable, Serializable {
   @Id
@@ -14,10 +20,17 @@ public class Project implements Achievable, Serializable {
   @JoinColumn(name = "template_id") // foreign key column
   @OnDelete(action = OnDeleteAction.CASCADE)
   private Template template;
+  private Long startTime;
+  private double budget = 0.0;
   public Project(String sampleDataFileName, Template template) {
     super();
     setSampleDataFileName(sampleDataFileName);
     this.template = template;
+  }
+  public Project(Template template, Long startTime, double budget) {
+    setTemplate(template);
+    setStartTime(startTime);
+    setBudget(budget);
   }
   public String getSampleDataFileName() {
     return sampleDataFileName;
@@ -35,18 +48,28 @@ public class Project implements Achievable, Serializable {
   public Template getTemplate() {
     return template;
   }
-  public Project setTemplate(Template template) {
+  public void setTemplate(Template template) {
     this.template = template;
-    return this;
   }
   public Project(){super();}
   /**
    * The dream is to make this method get final project result for the lecturer
-   *
    * @return The ratio of student project achievement to ideal achievement to solve project puzzle
    */
   @Override
   public double getAchievingPercent() {
     return 0;
+  }
+  public Long getStartTime() {
+    return startTime;
+  }
+  public void setStartTime(Long startTime) {
+    this.startTime = startTime;
+  }
+  public double getBudget() {
+    return budget;
+  }
+  public void setBudget(double budget) {
+    this.budget = budget;
   }
 }

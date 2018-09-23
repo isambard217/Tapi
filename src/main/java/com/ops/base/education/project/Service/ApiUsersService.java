@@ -31,4 +31,7 @@ public class ApiUsersService {
   public ApiUser getApiUserByUserName(String userName) {
 		return this.apiUsersRepository.findByUserName(userName);
   }
+	public ApiUser getApiUserById(Long apiUserId) {
+		return this.apiUsersRepository.findById(apiUserId).get();
+	}
 }
