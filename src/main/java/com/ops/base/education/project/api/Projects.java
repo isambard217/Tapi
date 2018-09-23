@@ -18,11 +18,11 @@ public class Projects {
     this.projectsService = projectsService;
   }
   @GetMapping
-  public List<Achievable> getProjects(@RequestParam Long studentId, @RequestHeader String auth){
-    return this.projectsService.getProjects(studentId);
+  public List<Achievable> getProjects(@RequestParam Long apiUserId, @RequestHeader String auth){
+    return this.projectsService.getProjects(apiUserId);
   }
   @PostMapping
-  public String createProject(@RequestBody Long apiUserId, @RequestParam Long templateId, @RequestHeader String auth){
+  public Project createProject(@RequestBody Long apiUserId, @RequestParam Long templateId, @RequestHeader String auth){
     return this.projectsService.selectProject(apiUserId, templateId);
   }
   @PutMapping

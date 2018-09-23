@@ -62,6 +62,7 @@ class AuthFilter extends UsernamePasswordAuthenticationFilter {
       .claim("authorities", ((User) authResult.getPrincipal()).getAuthorities().toArray())
       .claim("firstName", apiUser.getFirstName())
       .claim("lastName", apiUser.getLastName())
+      .claim("apiUserId", apiUser.getId())
       .signWith(SignatureAlgorithm.HS512, SECRET.getBytes(StandardCharsets.UTF_8))
       .compact();
     try {

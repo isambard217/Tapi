@@ -55,19 +55,19 @@ public class ProjectsService {
    *  Assign a given student a project
    * @param apiUserId The api user id
    * @param templateId the title or templateId  that student is interested in
-   * @return the templateId entity that student has selected
+   * @return the created project
    */
-  public String selectProject(Long apiUserId, Long templateId){
+  public Project selectProject(Long apiUserId, Long templateId){
     //first load the user using ApiUsersService create method if you have to
     ApiUser apiUser = this.apiUsersService.getApiUserById(apiUserId);
     if (!apiUser.isEnabled())
-      return "apiUser is disabled. Please ask Module admin to enable this account for you";
+      return null;
     if(apiUser.getProject() != null)
-      return "Apologies, but you are already working on project: " + apiUser.getProject().getTemplate().getName();
+      return null;
     // second get the template using Template Service create service component if necessary
     Template template = this.templatesService.getTemplate(templateId);
     if (!template.getId().equals(templateId))
-      return  "Requested template id=" + template.getId() +" doesn't match stored entity id";
+      return  null;
     // third create a project from the given above entities
     Long startTime = new Date(System.currentTimeMillis()).getTime();
     Project project = new Project(template , startTime, DEFAULT_PROJECT_BUDGET);
@@ -77,6 +77,6 @@ public class ProjectsService {
     apiUser.setProject(project);
     // persist the apiUser i.e. put or patch operation
    this.apiUsersRepository.save(apiUser);
-    return "apiUser assigned project successfully ... Project id: " + apiUser.getProject().getId();
+    return project;
   }
 }
