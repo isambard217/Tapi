@@ -1,7 +1,9 @@
 package com.ops.base.education.project.security;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ops.base.education.project.Service.ApiUsersService;
+import com.ops.base.education.project.Service.EventsService;
 import com.ops.base.education.project.domain.ApiUser;
+import com.ops.base.education.project.domain.Event;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.slf4j.Logger;
@@ -24,10 +26,13 @@ import static com.ops.base.education.project.security.PrivateSecurityConstants.*
 class AuthFilter extends UsernamePasswordAuthenticationFilter {
   private AuthenticationManager authenticationManager;
   private ApiUsersService apiUsersService;
+  private final EventsService eventsService;
   private static Logger authLogger = LoggerFactory.getLogger(AuthFilter.class);
-  AuthFilter(AuthenticationManager authenticationManager, ApiUsersService apiUsersService) {
+  AuthFilter(AuthenticationManager authenticationManager,
+             ApiUsersService apiUsersService, EventsService eventsService) {
     this.authenticationManager = authenticationManager;
     this.apiUsersService = apiUsersService;
+    this.eventsService = eventsService;
   }
   @Override
   public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
@@ -67,6 +72,8 @@ class AuthFilter extends UsernamePasswordAuthenticationFilter {
       .compact();
     try {
       response.getWriter().write(TOKEN_PREFIX + jwtToken);
+      this.eventsService.createEvent(new Event("Logged In", apiUser,
+        new Date(System.currentTimeMillis()).getTime(), false));
     } catch (Exception e) {
       authLogger.warn(e.getMessage());
       throw (e);

@@ -30,6 +30,8 @@ public class ApiUser implements Serializable {
     inverseJoinColumns = @JoinColumn(
       name = "role_id", referencedColumnName = "id"))
 	private Collection<Role> roles;
+	@OneToMany(targetEntity = Event.class, cascade = CascadeType.ALL, mappedBy = "apiUser")
+  private Collection<Event> events;
 	private boolean enabled;
 	@OneToOne
   private Project project;
@@ -96,6 +98,12 @@ public class ApiUser implements Serializable {
   }
   public void setRoles(Collection<Role> roles) {
     this.roles = roles;
+  }
+  public Collection<Event> getEvents() {
+    return events;
+  }
+  public void setEvents(Collection<Event> events) {
+    this.events = events;
   }
   public boolean isEnabled() {
     return enabled;

@@ -1,5 +1,6 @@
 package com.ops.base.education.project.security;
 import com.ops.base.education.project.Service.ApiUsersService;
+import com.ops.base.education.project.Service.EventsService;
 import com.ops.base.education.project.configuration.CorsFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
@@ -22,14 +23,17 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
   private BCryptPasswordEncoder bCryptPasswordEncoder;
   private CorsFilter corsFilter;
   private ApiUsersService apiUsersService;
+  private final EventsService eventsService;
   @Autowired
   public SecurityConfiguration(ApiUserDetailsService userDetailsService,
                                BCryptPasswordEncoder bCryptPasswordEncoder,
-                               CorsFilter corsFilter, ApiUsersService apiUsersService){
+                               CorsFilter corsFilter, ApiUsersService apiUsersService,
+                               EventsService eventsService){
     setUserDetailsService(userDetailsService);
     setBCryptPasswordEncoder(bCryptPasswordEncoder);
     setCorsFilter(corsFilter);
     this.apiUsersService = apiUsersService;
+    this.eventsService = eventsService;
   }
   @Override
   protected void configure(HttpSecurity httpSecurity) throws Exception {
@@ -39,12 +43,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
       .antMatchers(HttpMethod.POST, "/api/techniques").hasRole("ADMIN_PRIVILEGE")
       .anyRequest().authenticated()
       .and()
-      .addFilter(getJwtAuthenticationFilter(authenticationManager()))
+      .addFilter(getJwtAuthenticationFilter(authenticationManager(), this.eventsService))
       .addFilter(new AuthoriseFilter(authenticationManager(), this.userDetailsService))
       .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
   }
-  private AuthFilter getJwtAuthenticationFilter(AuthenticationManager authenticationManager) {
-    AuthFilter authFilter = new AuthFilter(authenticationManager, this.apiUsersService);
+  private AuthFilter getJwtAuthenticationFilter(AuthenticationManager authenticationManager,
+                                                EventsService eventsService) {
+    AuthFilter authFilter = new AuthFilter(authenticationManager, this.apiUsersService, eventsService);
     authFilter.setFilterProcessesUrl(LOG_IN_URL);
     return authFilter;
   }
