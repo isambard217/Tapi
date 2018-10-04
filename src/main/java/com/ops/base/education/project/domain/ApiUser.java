@@ -39,6 +39,7 @@ public class ApiUser implements Serializable {
   @Size(min = 5)
   @Column(unique = true)
 	private String email;
+	private int credit;
 	public ApiUser(){super();}
 	public ApiUser(String firstName, String surname) {
 		super();
@@ -49,6 +50,7 @@ public class ApiUser implements Serializable {
 	  setUserName(userName);
 	  setPassword(password);
 	  setRoles(roles);
+	  this.credit = 3000;
   }
   public ApiUser(String userName, String password, String firstName, String lastName, String email,
                  ArrayList<Role> roles, boolean enabled) {
@@ -59,6 +61,7 @@ public class ApiUser implements Serializable {
     setEmail(email);
     setRoles(roles);
     setEnabled(enabled);
+    setCredit(3000);
   }
   public static long getSerialVersionUID() {
     return serialVersionUID;
@@ -122,5 +125,11 @@ public class ApiUser implements Serializable {
   }
   public void setEmail(String email) {
     this.email = email;
+  }
+  public int getCredit() {
+    return credit;
+  }
+  public void setCredit(int credit) {
+    this.credit = credit;
   }
 }
