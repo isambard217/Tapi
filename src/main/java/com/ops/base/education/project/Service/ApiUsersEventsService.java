@@ -40,4 +40,9 @@ public class ApiUsersEventsService implements EventsService {
   public List<Event> getAllEvents() {
     return (ArrayList<Event>) this.eventsRepository.findAll();
   }
+
+  @Override
+  public Event findEventById(Long eventId) {
+    return this.eventsRepository.findById(eventId).get();
+  }
 }

@@ -21,8 +21,8 @@ public class TeacherEvents {
     return this.eventsService.getAllEvents();
   }
   @PutMapping
-  public Event updateEvent(@RequestHeader String auth,@RequestBody EventDtoIn eventDtoIn){
-    Event event = this.modelMapper.map(eventDtoIn, Event.class);
+  public Event updateEvent(@RequestHeader String auth,@RequestBody Long eventId){
+    Event event = this.eventsService.findEventById(eventId);
     return this.eventsService.updateEvent(event);
   }
   @DeleteMapping

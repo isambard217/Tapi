@@ -1,12 +1,10 @@
 package com.ops.base.education.project.Service;
 import com.google.common.collect.Lists;
 import com.ops.base.education.project.Repository.ApiUsersRepository;
+import com.ops.base.education.project.Repository.EventsRepository;
 import com.ops.base.education.project.Repository.ProjectRepository;
 import com.ops.base.education.project.Repository.TemplatesRepository;
-import com.ops.base.education.project.domain.Achievable;
-import com.ops.base.education.project.domain.ApiUser;
-import com.ops.base.education.project.domain.Project;
-import com.ops.base.education.project.domain.Template;
+import com.ops.base.education.project.domain.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,16 +21,18 @@ public class ProjectsService {
   private ProjectRepository projectRepository;
   private TemplatesRepository templatesRepository;
   private ApiUsersRepository apiUsersRepository;
+  private EventsRepository eventsRepository;
   private static Logger logger = LoggerFactory.getLogger(ProjectsService.class);
   @Autowired
   public ProjectsService(ProjectRepository projectRepository, TemplatesRepository templatesRepository,
                          ApiUsersRepository apiUsersRepository, ApiUsersService apiUsersService,
-                         TemplatesService templatesService) {
+                         TemplatesService templatesService, EventsRepository eventsRepository) {
     this.projectRepository = projectRepository;
     this.templatesRepository = templatesRepository;
     this.apiUsersRepository = apiUsersRepository;
     this.apiUsersService = apiUsersService;
     this.templatesService = templatesService;
+    this.eventsRepository = eventsRepository;
   }
   public List<Achievable> getProjects(Long studentId){
     List<Achievable> projects = new ArrayList<>();
@@ -77,6 +77,8 @@ public class ProjectsService {
     apiUser.setProject(project);
     // persist the apiUser i.e. put or patch operation
    this.apiUsersRepository.save(apiUser);
+   this.eventsRepository.save(new Event("Project selected", apiUser,
+     new Date(System.currentTimeMillis()).getTime(), false));
     return project;
   }
 }

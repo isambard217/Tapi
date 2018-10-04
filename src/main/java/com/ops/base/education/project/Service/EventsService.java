@@ -8,4 +8,5 @@ public interface EventsService {
   public Event updateEvent(Event event);
   public boolean deleteEvent(Long eventId);
   List<Event> getAllEvents();
+  Event findEventById(Long eventId);
 }
