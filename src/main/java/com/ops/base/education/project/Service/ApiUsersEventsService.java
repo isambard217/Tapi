@@ -7,12 +7,12 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 @Service
-public class ApiUsersEvents implements EventsService {
+public class ApiUsersEventsService implements EventsService {
   private EventsRepository eventsRepository;
   private ApiUsersService apiUsersService;
   @Autowired
-  public ApiUsersEvents(EventsRepository eventsRepository,
-                        ApiUsersService apiUsersService) {
+  public ApiUsersEventsService(EventsRepository eventsRepository,
+                               ApiUsersService apiUsersService) {
     this.eventsRepository = eventsRepository;
     this.apiUsersService = apiUsersService;
   }
@@ -25,12 +25,16 @@ public class ApiUsersEvents implements EventsService {
     return this.apiUsersService.getApiUserById(userId).getEvents();
   }
   @Override
-  public Event updateEvent(Long userId) {
-    return null;
+  public Event updateEvent(Event event) {
+    Event eventToUpdate = this.eventsRepository.findById(event.getId()).get();
+    eventToUpdate.setHandled(true);
+    return this.eventsRepository.save(eventToUpdate);
   }
   @Override
-  public Event deleteEvent(Long userId) {
-    return null;
+  public boolean deleteEvent(Long eventId) {
+    Event eventToDelete = this.eventsRepository.findById(eventId).get();
+    this.eventsRepository.deleteById(eventToDelete.getId());
+    return true;
   }
   @Override
   public List<Event> getAllEvents() {

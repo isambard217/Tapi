@@ -5,7 +5,7 @@ import java.util.List;
 public interface EventsService {
   public Event createEvent(Event event);
   public Collection<Event> getEvents(Long userId);
-  public Event updateEvent(Long userId);
-  public Event deleteEvent(Long userId);
+  public Event updateEvent(Event event);
+  public boolean deleteEvent(Long eventId);
   List<Event> getAllEvents();
 }
