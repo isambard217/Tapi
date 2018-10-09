@@ -49,7 +49,7 @@ public class ApiUsersService {
 	public List<ApiUser> addApiUsers(Collection<ApiUser> apiUsers) {
 		List<ApiUser> createdApiUsers = new ArrayList<>(apiUsers.toArray().length);
 		apiUsers.forEach(apiUser -> {
-			apiUser.setPassword(bCryptPasswordEncoder.encode(API_PASSWORD));
+			apiUser.setPassword(bCryptPasswordEncoder.encode(apiUser.getPassword()));
 			apiUser.setProject(null);
 			apiUser.setRoles(Arrays.asList(this.rolesRepository.findByName("ROLE_USER")));
 			apiUser.setEnabled(true);

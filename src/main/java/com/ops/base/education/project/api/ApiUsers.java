@@ -27,7 +27,7 @@ public class ApiUsers {
     Collection<ApiUser> apiUsers = new ArrayList<>(apiUserToAddDtos.toArray().length);
     apiUserToAddDtos.forEach(apiUserToAddDto -> {
       ApiUser apiUser = modelMapper.map(apiUserToAddDto, ApiUser.class);
-      ((ArrayList<ApiUser>) apiUsers).add(apiUser);
+      apiUsers.add(apiUser);
     });
 		return this.apiUsersService.addApiUsers(apiUsers);
 	}

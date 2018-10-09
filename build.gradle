@@ -55,6 +55,7 @@ dependencies {
 	// https://mvnrepository.com/artifact/org.modelmapper/modelmapper
 	compile group: 'org.modelmapper', name: 'modelmapper', version: '0.7.5'
     compile 'com.google.guava:guava:26.0-jre'
+	compileOnly "org.springframework.boot:spring-boot-configuration-processor"
 }
 task cucumber(dependsOn: testClasses) {
     doLast {
