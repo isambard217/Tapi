@@ -7,9 +7,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @SpringBootApplication
-public class EduProjectManager {
+public class TheTraceApi {
 	public static void main(String[] args) {
-		SpringApplication.run(EduProjectManager.class, args);
+		SpringApplication.run(TheTraceApi.class, args);
 	}
 	@Bean
 	public BCryptPasswordEncoder bCryptPasswordEncoder() {
