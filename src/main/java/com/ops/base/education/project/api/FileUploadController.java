@@ -3,6 +3,7 @@ import java.io.IOException;
 import java.util.stream.Collectors;
 import com.ops.base.education.project.Service.storage.StorageFileNotFoundException;
 import com.ops.base.education.project.Service.storage.StorageService;
+import com.ops.base.education.project.domain.Project;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -37,9 +38,10 @@ public class FileUploadController {
       "attachment; filename=\"" + file.getFilename() + "\"").body(file);
   }
   @PostMapping
-  public String handleFileUpload(@RequestParam("file") MultipartFile file, @RequestHeader String auth) {
-    storageService.store(file);
-    return "done";
+  @ResponseBody
+  public Project handleFileUpload(@RequestParam("file") MultipartFile file, @RequestHeader String auth,
+                                  @RequestHeader long apiUserId) {
+    return storageService.store(file,apiUserId);
   }
   @ExceptionHandler(StorageFileNotFoundException.class)
   public ResponseEntity<?> handleStorageFileNotFound(StorageFileNotFoundException exc) {

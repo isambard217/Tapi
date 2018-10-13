@@ -15,16 +15,16 @@ public class Project implements Achievable, Serializable {
   @Id
   @GeneratedValue
   private  Long id;
-  private String sampleDataFileName;
+  private String fileName;
   @ManyToOne
   @JoinColumn(name = "template_id") // foreign key column
   @OnDelete(action = OnDeleteAction.CASCADE)
   private Template template;
   private Long startTime;
   private double budget = 0.0;
-  public Project(String sampleDataFileName, Template template) {
+  public Project(String fileName, Template template) {
     super();
-    setSampleDataFileName(sampleDataFileName);
+    setFileName(fileName);
     this.template = template;
   }
   public Project(Template template, Long startTime, double budget) {
@@ -32,11 +32,11 @@ public class Project implements Achievable, Serializable {
     setStartTime(startTime);
     setBudget(budget);
   }
-  public String getSampleDataFileName() {
-    return sampleDataFileName;
+  public String getFileName() {
+    return fileName;
   }
-  public void setSampleDataFileName(String sampleDataFileName) {
-    this.sampleDataFileName = sampleDataFileName;
+  public void setFileName(String fileName) {
+    this.fileName = fileName;
   }
   public Long getId() {
     return id;
