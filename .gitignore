@@ -27,4 +27,7 @@ bin
 /nbdist/
 /.nb-gradle/
 concretepage/
-uploadDir/
+# exlude everthing in
+uploadDirStaging/*
+# exception to the rule
+!uploadDirStaging/.gitKeep

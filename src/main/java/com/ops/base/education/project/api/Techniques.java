@@ -1,20 +1,20 @@
 package com.ops.base.education.project.api;
-
 import com.ops.base.education.project.Repository.TechniquesRepository;
+import com.ops.base.education.project.Service.TechniquesService;
 import com.ops.base.education.project.domain.Technique;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.ArrayList;
 import java.util.List;
-
 @RequestMapping("/api/techniques")
 @RestController
 public class Techniques {
 	private TechniquesRepository techniquesRepository;
+	private final TechniquesService techniquesService;
   @Autowired
-  public Techniques(TechniquesRepository techniquesRepository){
+  public Techniques(TechniquesRepository techniquesRepository, TechniquesService techniquesService){
     this.techniquesRepository = techniquesRepository;
+    this.techniquesService = techniquesService;
   }
 	@GetMapping
 	public List<Technique> list(@RequestHeader String auth) {
@@ -25,8 +25,13 @@ public class Techniques {
     return (ArrayList<Technique>) this.techniquesRepository.saveAll(techniques);
   }
   @PutMapping
-  public List<Technique> update(@RequestBody List<Technique> techniques, @RequestHeader String auth){
-    return (ArrayList<Technique>) this.techniquesRepository.saveAll(techniques);
+  public Technique update(@RequestBody Technique technique, @RequestHeader String auth){
+    try {
+      this.techniquesService.updateTechnique(technique);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    return technique;
   }
   @DeleteMapping
   public String remove(@RequestParam Long id, @RequestHeader String auth){

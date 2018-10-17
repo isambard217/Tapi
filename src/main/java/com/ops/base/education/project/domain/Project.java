@@ -3,6 +3,7 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Collection;
 /**
  * @author alhaytham
  * As this entity changing in its way to take its last release form
@@ -22,6 +23,8 @@ public class Project implements Achievable, Serializable {
   private Template template;
   private Long startTime;
   private double budget = 0.0;
+  @OneToMany
+  private Collection<TechniqueRequest> techniqueRequests;
   public Project(String fileName, Template template) {
     super();
     setFileName(fileName);
@@ -71,5 +74,11 @@ public class Project implements Achievable, Serializable {
   }
   public void setBudget(double budget) {
     this.budget = budget;
+  }
+  public Collection<TechniqueRequest> getTechniqueRequests() {
+    return techniqueRequests;
+  }
+  public void setTechniqueRequests(Collection<TechniqueRequest> techniqueRequests) {
+    this.techniqueRequests = techniqueRequests;
   }
 }

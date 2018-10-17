@@ -1,5 +1,5 @@
 package com.ops.base.education.project.api;
-import com.ops.base.education.project.Repository.ProjectRepository;
+import com.ops.base.education.project.Repository.ProjectsRepository;
 import com.ops.base.education.project.Service.ProjectsService;
 import com.ops.base.education.project.domain.Achievable;
 import com.ops.base.education.project.domain.Project;
@@ -10,11 +10,11 @@ import java.util.List;
 @RestController
 @RequestMapping("api/projects")
 public class Projects {
-  private ProjectRepository projectRepository;
+  private ProjectsRepository projectsRepository;
   private ProjectsService projectsService;
   @Autowired
-  public Projects(ProjectRepository projectRepository, ProjectsService projectsService){
-    this.projectRepository = projectRepository;
+  public Projects(ProjectsRepository projectsRepository, ProjectsService projectsService){
+    this.projectsRepository = projectsRepository;
     this.projectsService = projectsService;
   }
   @GetMapping
@@ -27,11 +27,11 @@ public class Projects {
   }
   @PutMapping
   public List<Project> updateProjects(@RequestBody List<Project> projects, String auth) {
-    return (ArrayList<Project>) this.projectRepository.saveAll(projects);
+    return (ArrayList<Project>) this.projectsRepository.saveAll(projects);
   }
   @DeleteMapping
   String deleteProject(@RequestParam Long id, String auth) {
-    this.projectRepository.deleteById(id);
+    this.projectsRepository.deleteById(id);
     return "Project deleted successfully";
   }
 }

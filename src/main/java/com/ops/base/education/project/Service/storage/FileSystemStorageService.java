@@ -1,106 +1,75 @@
 package com.ops.base.education.project.Service.storage;
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.Optional;
 import java.util.stream.Stream;
 import com.ops.base.education.project.Repository.ApiUsersRepository;
+import com.ops.base.education.project.Repository.ProjectsRepository;
+import com.ops.base.education.project.Service.ProjectsService;
 import com.ops.base.education.project.domain.ApiUser;
 import com.ops.base.education.project.domain.Project;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.FileSystemUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 @Service
 public class FileSystemStorageService implements StorageService {
-  private final Path rootLocation;
+  private final Path fileStorageLocation;
   private final ApiUsersRepository apiUsersRepository;
+  private final ProjectsRepository projectsRepository;
+  private final Logger logger;
   @Autowired
-  public FileSystemStorageService(StorageProperties properties, ApiUsersRepository apiUsersRepository) {
-    this.rootLocation = Paths.get(properties.getLocation());
+  public FileSystemStorageService(StorageProperties storageProperties,
+                                  ApiUsersRepository apiUsersRepository,
+                                  ProjectsRepository projectsRepository) {
+    this.fileStorageLocation = Paths.get(storageProperties.getUploadDir()).toAbsolutePath().normalize();
     this.apiUsersRepository = apiUsersRepository;
+    this.logger = LoggerFactory.getLogger(this.getClass());
+    this.projectsRepository = projectsRepository;
   }
   @Override
-  public Project store(MultipartFile file, long apiUserId) {
-    String filename;
-    ApiUser apiUser = this.apiUsersRepository.findById(apiUserId).get();
-    String originalFilename = file.getOriginalFilename();
-    if (originalFilename != null) {
-      filename = StringUtils.cleanPath(originalFilename);
-      try {
-        if (file.isEmpty()) {
-          throw new StorageException("Failed to store empty file " + filename);
-        }
-        if (filename.contains("..")) {
-          // This is a security check
-          throw new StorageException(
-            "Cannot store file with relative path outside current directory "
-              + filename);
-        }
-        try (InputStream inputStream = file.getInputStream()) {
-          Files.copy(inputStream, this.rootLocation.resolve(filename),
-            StandardCopyOption.REPLACE_EXISTING);
-          apiUser.getProject().setFileName(originalFilename);
-          this.apiUsersRepository.save(apiUser);
-        }
-      } catch (IOException e) {
-        throw new StorageException("Failed to store file " + filename, e);
-      }
+  @Transactional
+  public String storeFileForUserId(MultipartFile file, long apiUserId) throws Exception {
+    // Normalize file name
+    String originalFileName = file.getOriginalFilename();
+    if(originalFileName == null) {
+      throw new Exception("file name is null ...!");
     }
-    return apiUser.getProject();
-  }
-  @Override
-  public Stream<Path> loadAll() {
-    try{
-      return Files.walk(this.rootLocation, 1)
-        .filter(path -> !path.equals(this.rootLocation))
-        .map(this.rootLocation::relativize);
+    String fileName = StringUtils.cleanPath(originalFileName);
+    // stop users from writing up the directory hierarchy as that may affect other running process
+    // using that space
+    if(fileName.contains("..")){
+      throw new Exception("Sorry! FileName contains invalid path sequence " + fileName);
     }
-    catch (Exception e) {
-      throw new StorageException("Failed to read stored files", e);
-    }
-    finally {
-    }
-  }
-  @Override
-  public Path load(String filename) {
-    return rootLocation.resolve(filename);
-  }
-  @Override
-  public Resource loadAsResource(String filename) {
-    try {
-      Path file = load(filename);
-      Resource resource = new UrlResource(file.toUri());
-      if (resource.exists() || resource.isReadable()) {
-        return resource;
+    // Copy clean file to the target location (apply Replace existing file policy with the same name)
+    Path pathToTargetLocation = this.fileStorageLocation.resolve(fileName);
+    Files.copy(file.getInputStream(), pathToTargetLocation, StandardCopyOption.REPLACE_EXISTING);
+    Optional<ApiUser> optionalApiUser = apiUsersRepository.findById(apiUserId);
+    if(optionalApiUser.isPresent()) {
+      ApiUser apiUser = optionalApiUser.get();
+      Optional<Project> optionalProject = this.projectsRepository.findById(apiUser.getProject().getId());
+      if (optionalProject.isPresent()) {
+        Project project = optionalProject.get();
+        project.setFileName(fileName);
+        this.projectsRepository.save(project);
       }
       else {
-        throw new StorageFileNotFoundException(
-          "Could not read file: " + filename);
-
+        throw new Exception("User do not have project yet ... ");
       }
     }
-    catch (MalformedURLException e) {
-      throw new StorageFileNotFoundException("Could not read file: " + filename, e);
+    else {
+      throw new Exception("Sorry ! User with id: " + apiUserId + " is not found ...!");
     }
-  }
-  @Override
-  public void deleteAll() {
-    FileSystemUtils.deleteRecursively(rootLocation.toFile());
-  }
-  @Override
-  public void init() {
-    try {
-      Files.createDirectories(rootLocation);
-    }
-    catch (IOException e) {
-      throw new StorageException("Could not initialize storage", e);
-    }
+    return fileName;
   }
 }

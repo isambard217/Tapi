@@ -13,6 +13,8 @@ public class Technique implements Serializable {
   private String name;
   @Lob
   private String briefDescription;
+  private double cost;
+  private int techniqueNumber;
   public Technique(){}
   public Technique(String name, String briefDescription){
     setName(name);
@@ -35,5 +37,17 @@ public class Technique implements Serializable {
   }
   public void setBriefDescription(String briefDescription) {
     this.briefDescription = briefDescription;
+  }
+  public double getCost() {
+    return cost;
+  }
+  public void setCost(double cost) {
+    this.cost = cost;
+  }
+  public int getTechniqueNumber() {
+    return techniqueNumber;
+  }
+  public void setTechniqueNumber(int techniqueNumber) {
+    this.techniqueNumber = techniqueNumber;
   }
 }

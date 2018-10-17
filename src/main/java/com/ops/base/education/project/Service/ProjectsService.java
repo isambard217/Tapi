@@ -2,7 +2,7 @@ package com.ops.base.education.project.Service;
 import com.google.common.collect.Lists;
 import com.ops.base.education.project.Repository.ApiUsersRepository;
 import com.ops.base.education.project.Repository.EventsRepository;
-import com.ops.base.education.project.Repository.ProjectRepository;
+import com.ops.base.education.project.Repository.ProjectsRepository;
 import com.ops.base.education.project.Repository.TemplatesRepository;
 import com.ops.base.education.project.domain.*;
 import org.slf4j.Logger;
@@ -18,16 +18,16 @@ import static com.ops.base.education.project.Service.PublicServiceConstants.DEFA
 public class ProjectsService {
   private ApiUsersService apiUsersService;
   private TemplatesService templatesService;
-  private ProjectRepository projectRepository;
+  private ProjectsRepository projectsRepository;
   private TemplatesRepository templatesRepository;
   private ApiUsersRepository apiUsersRepository;
   private EventsRepository eventsRepository;
   private static Logger logger = LoggerFactory.getLogger(ProjectsService.class);
   @Autowired
-  public ProjectsService(ProjectRepository projectRepository, TemplatesRepository templatesRepository,
+  public ProjectsService(ProjectsRepository projectsRepository, TemplatesRepository templatesRepository,
                          ApiUsersRepository apiUsersRepository, ApiUsersService apiUsersService,
                          TemplatesService templatesService, EventsRepository eventsRepository) {
-    this.projectRepository = projectRepository;
+    this.projectsRepository = projectsRepository;
     this.templatesRepository = templatesRepository;
     this.apiUsersRepository = apiUsersRepository;
     this.apiUsersService = apiUsersService;
@@ -72,7 +72,7 @@ public class ProjectsService {
     Long startTime = new Date(System.currentTimeMillis()).getTime();
     Project project = new Project(template , startTime, DEFAULT_PROJECT_BUDGET);
     // persist the project
-    this.projectRepository.save(project);
+    this.projectsRepository.save(project);
     // assign the project to the api user
     apiUser.setProject(project);
     // persist the apiUser i.e. put or patch operation
