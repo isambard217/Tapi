@@ -14,7 +14,7 @@ public class Role implements Serializable {
   private String name;
   @ManyToMany(mappedBy = "roles")
   private Collection<ApiUser> apiUsers;
-  @ManyToMany
+  @ManyToMany(fetch = FetchType.EAGER)
   @JoinTable(
     name = "roles_privileges",
     joinColumns = @JoinColumn(

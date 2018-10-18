@@ -22,7 +22,7 @@ public class ApiUser implements Serializable {
 	@Column(unique = true)
 	private String userName;
 	private String password;
-	@ManyToMany
+	@ManyToMany(fetch = FetchType.EAGER)
   @JoinTable(
     name = "api_users_roles",
     joinColumns = @JoinColumn(

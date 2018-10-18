@@ -17,10 +17,9 @@ public class TechniqueRequests {
   }
   @PostMapping
   public TechniqueRequest requestTechnique(@RequestHeader String auth,
-                                           @RequestBody TechniqueRequest techniqueRequest,
-                                           @RequestParam long projectId){
+                                           @RequestBody TechniqueRequest techniqueRequest){
     try {
-      return this.techniqueRequestsService.requestAnalysis(techniqueRequest, projectId);
+      return this.techniqueRequestsService.requestAnalysis(techniqueRequest);
     } catch (Exception e) {
       logger.error("Sorry request fail because: " + e.getMessage());
     }

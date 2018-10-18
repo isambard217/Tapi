@@ -6,13 +6,42 @@ public class TechniqueRequest implements Serializable {
   @Id
   @GeneratedValue
   private  Long id;
-  String sampleName;
-  String poisonName;
-  String resultFileName;
+  @OneToOne
+  private Sample sample;
+  @OneToOne
+  private Specie specie;
+  private String resultFileName;
   @OneToOne
   private Technique technique;
+  @ManyToOne
+  private Project project;
   private long time;
+  private String specieName;
   public TechniqueRequest(){}
+  public Long getId() {
+    return id;
+  }
+  public void setId(Long id) {
+    this.id = id;
+  }
+  public Sample getSample() {
+    return sample;
+  }
+  public void setSample(Sample sample) {
+    this.sample = sample;
+  }
+  public Specie getSpecie() {
+    return specie;
+  }
+  public void setSpecie(Specie specie) {
+    this.specie = specie;
+  }
+  public String getResultFileName() {
+    return resultFileName;
+  }
+  public void setResultFileName(String resultFileName) {
+    this.resultFileName = resultFileName;
+  }
   public Technique getTechnique() {
     return technique;
   }
@@ -25,28 +54,16 @@ public class TechniqueRequest implements Serializable {
   public void setTime(long time) {
     this.time = time;
   }
-  public Long getId() {
-    return id;
+  public Project getProject() {
+    return project;
   }
-  public void setId(Long id) {
-    this.id = id;
+  public void setProject(Project project) {
+    this.project = project;
   }
-  public String getSampleName() {
-    return sampleName;
+  public String getSpecieName() {
+    return specieName;
   }
-  public void setSampleName(String sampleName) {
-    this.sampleName = sampleName;
-  }
-  public String getPoisonName() {
-    return poisonName;
-  }
-  public void setPoisonName(String poisonName) {
-    this.poisonName = poisonName;
-  }
-  public String getResultFileName() {
-    return resultFileName;
-  }
-  public void setResultFileName(String resultFileName) {
-    this.resultFileName = resultFileName;
+  public void setSpecieName(String specieName) {
+    this.specieName = specieName;
   }
 }

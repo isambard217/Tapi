@@ -43,7 +43,7 @@ dependencies {
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 	testCompile('org.springframework.security:spring-security-test')
 	// https://mvnrepository.com/artifact/mysql/mysql-connector-java
-	compile group: 'mysql', name: 'mysql-connector-java', version: '8.0.11'
+	compile group: 'mysql', name: 'mysql-connector-java', version: '8.0.12'
 	compile("com.h2database:h2")
 	// https://mvnrepository.com/artifact/io.cucumber/cucumber-java
 	compile group: 'io.cucumber', name: 'cucumber-java', version: '3.0.2'
